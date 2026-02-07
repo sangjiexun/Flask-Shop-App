@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Your Orders</h1>
+            
+            {% if orders %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td>${{ order.total }}</td>
+                        <td>{{ order.status }}</td>
+                        <td>
+                            <a href="{{ url_for('order', id=order.id) }}" class="btn btn-primary">View</a>
+                            {% if order.status == 'pending' %}
+                            <a href="{{ url_for('pay', id=order.id) }}" class="btn btn-success">Pay</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="alert alert-info">
+                You haven't placed any orders yet.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
