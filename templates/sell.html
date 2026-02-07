@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Seller Dashboard</h1>
+            <a href="{{ url_for('add_product') }}" class="btn btn-success mb-4">Add New Product</a>
+            
+            <h2>Your Products</h2>
+            <div class="row">
+                {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        {% if product.image %}
+                        <img src="{{ url_for('static', filename='images/' + product.image) }}" class="card-img-top" alt="{{ product.name }}">
+                        {% else %}
+                        <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="{{ product.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="card-text">{{ product.description[:100] }}...</p>
+                            <p class="card-text font-weight-bold">${{ product.price }}</p>
+                            <p class="card-text">Stock: {{ product.stock }}</p>
+                            <p class="card-text">Category: {{ product.category }}</p>
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-primary">Edit</a>
+                                <a href="#" class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            {% if not products %}
+            <div class="alert alert-info">
+                You haven't added any products yet. Click the "Add New Product" button to get started.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
