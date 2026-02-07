@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Payment</h1>
+            
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2>Order Summary</h2>
+                </div>
+                <div class="card-body">
+                    <p><strong>Order #:</strong> {{ order.id }}</p>
+                    <p><strong>Total Amount:</strong> ${{ order.total }}</p>
+                    <p><strong>Payment Method:</strong> Credit Card</p>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2>Payment Details</h2>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('pay', id=order.id) }}" method="post">
+                        <div class="form-group">
+                            <label for="cardholder">Cardholder Name</label>
+                            <input type="text" id="cardholder" name="cardholder" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cardnumber">Card Number</label>
+                            <input type="text" id="cardnumber" name="cardnumber" class="form-control" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="expiry">Expiry Date</label>
+                                    <input type="text" id="expiry" name="expiry" class="form-control" placeholder="MM/YY" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" id="cvv" name="cvv" class="form-control" placeholder="123" required>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg">Pay Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
