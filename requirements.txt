@@ -1,0 +1,11 @@
+Flask
+Flask-SQLAlchemy
+Flask-Login
+Flask-Migrate
+Flask-Security
+Flask-Mail
+Flask-Babel
+Flask-Uploads
+Werkzeug
+Jinja2
+Bootstrap-Flask
