@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Order #{{ order.id }}</h1>
+            <p class="text-muted">Order Date: {{ order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+            <p class="text-muted">Status: {{ order.status }}</p>
+            
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2>Order Items</h2>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items %}
+                            <tr>
+                                <td>{{ item.product.name }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>${{ item.price }}</td>
+                                <td>${{ item.quantity * item.price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="3" class="text-right">Total:</th>
+                                <th>${{ order.total }}</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            
+            {% if order.status == 'pending' %}
+            <div class="mb-4">
+                <a href="{{ url_for('pay', id=order.id) }}" class="btn btn-success btn-lg">Pay Now</a>
+            </div>
+            {% elif order.status == 'paid' %}
+            <div class="alert alert-success">
+                This order has been paid successfully.
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                Order status: {{ order.status }}
+            </div>
+            {% endif %}
+            
+            <a href="{{ url_for('orders') }}" class="btn btn-secondary">Back to Orders</a>
+        </div>
+    </div>
+{% endblock %}
